@@ -20,7 +20,8 @@ def all_amenities():
     return jsonify(amenities)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>', methods=['GET'],
+                 strict_slashes=False)
 def one_amenity_id(amenity_id):
     """ Return one amenity obj """
     amenity = storage.get(Amenity, amenity_id)
