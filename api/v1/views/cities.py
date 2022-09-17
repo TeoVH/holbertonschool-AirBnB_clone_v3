@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-State's routes
+city's routes
 """
 
 from models.state import State
@@ -37,7 +37,7 @@ def one_city_id(city_id):
 @app_views.route('/cities/<city_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_city(city_id):
-    """ Deletes a State obj """
+    """ Deletes a City obj """
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
@@ -69,7 +69,7 @@ def new_city(state_id):
 @app_views.route('/cities/<city_id>', methods=['PUT'],
                  strict_slashes=False)
 def update_city(city_id):
-    """ Update a state """
+    """ Update a City """
     city = storage.get(City, city_id)
     new_data = request.get_json().items()
     list_to_ignore = ["id", "created_at", "updated_at"]
