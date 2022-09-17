@@ -25,7 +25,7 @@ def one_state_id(state_id):
     if save is None:
         abort(404)
     save = save.to_dict()
-    return (save)
+    return jsonify(save)
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'],
