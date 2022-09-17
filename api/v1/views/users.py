@@ -62,7 +62,8 @@ def update_user(user_id):
     """ Update a user """
     user = storage.get(User, user_id)
     new_data = request.get_json().items()
-    list_to_ignore = ["id", "email", "created_at","updated_at"]
+    list_to_ignore = ["id", "email",
+                      "created_at","updated_at"]
 
     if user is None:
         abort(404)
