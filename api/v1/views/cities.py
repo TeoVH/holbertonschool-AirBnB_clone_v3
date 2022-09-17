@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-State's routes
+Citites's routes
 """
 
 from models.state import State
