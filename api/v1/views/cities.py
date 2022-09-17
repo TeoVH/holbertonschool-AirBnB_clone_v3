@@ -1,6 +1,10 @@
 #!/usr/bin/python3
 """
+<<<<<<< HEAD
 city's routes
+=======
+Citites's routes
+>>>>>>> 5a1d92166569b2197f5d01018fb52f16fb2c5e2e
 """
 
 from models.state import State
