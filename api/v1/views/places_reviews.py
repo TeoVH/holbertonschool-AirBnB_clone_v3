@@ -11,7 +11,7 @@ from models import storage
 from api.v1.views import app_views
 
 
-@app_views.route('/places/<place_id>/reviews',
+@app_views.route('/places/<string:place_id>/reviews',
                  methods=['GET'], strict_slashes=False)
 def all_reviews(place_id):
     """ Returns a list with all obj """
@@ -20,12 +20,13 @@ def all_reviews(place_id):
         abort(404)
 
     reviews_list = []
-    for i in place.reviews:
-        reviews_list.append(i.to_dict())
+    for review in place.reviews:
+        reviews_list.append(review.to_dict())
     return jsonify(reviews_list)
 
 
-@app_views.route('/reviews/<review_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/reviews/<string:review_id>',
+                 methods=['GET'], strict_slashes=False)
 def one_review(review_id):
     """ Return one obj """
     review = storage.get(Review, review_id)
@@ -35,7 +36,7 @@ def one_review(review_id):
     return jsonify(review)
 
 
-@app_views.route('/reviews/<review_id>', methods=['DELETE'],
+@app_views.route('/reviews/<string:review_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_review(review_id):
     """ Deletes a review obj """
@@ -47,12 +48,10 @@ def delete_review(review_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('/places/<place_id>/reviews',
+@app_views.route('/places/<string:place_id>/reviews',
                  methods=['POST'], strict_slashes=False)
 def new_review(place_id):
-    """ Create a new City """
-def post_review(place_id):
-    """create a new review"""
+    """ Create a new review """
     place = storage.get("Place", place_id)
     if place is None:
         abort(404)
@@ -72,7 +71,7 @@ def post_review(place_id):
     return make_response(jsonify(review.to_dict()), 201)
 
 
-@app_views.route('/reviews/<review_id>', methods=['PUT'],
+@app_views.route('/reviews/<string:review_id>', methods=['PUT'],
                  strict_slashes=False)
 def update_review(review_id):
     """ Update a review """
