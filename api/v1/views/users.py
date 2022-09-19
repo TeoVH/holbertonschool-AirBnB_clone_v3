@@ -45,11 +45,11 @@ def new_user():
     """ Create a new user """
     user = request.get_json()
     if user is None:
-        return make_response(jsonify({"error": "Not a JSON"}), 404)
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
     if "email" not in user:
-        return make_response(jsonify({"error": "Missing email"}), 404)
+        return make_response(jsonify({"error": "Missing email"}), 400)
     if "password" not in user:
-        return make_response(jsonify({"error": "Missing password"}), 404)
+        return make_response(jsonify({"error": "Missing password"}), 400)
 
     new_user = User(**request.get_json())
     new_user.save()
@@ -61,17 +61,16 @@ def new_user():
 def update_user(user_id):
     """ Update a user """
     user = storage.get(User, user_id)
-    new_data = request.get_json().items()
-    list_to_ignore = ["id", "email",
-                      "created_at","updated_at"]
+    list_to_ignore = ["id", "email", "created_at", "updated_at"]
 
     if user is None:
         abort(404)
-    if new_data is None:
-        return make_response(jsonify({"error": "Not a JSON"}), 404)
+    if request.get_json() is None:
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
 
-    for key, val in new_data:
+    for key, val in request.get_json().items():
         if key not in list_to_ignore:
             setattr(user, key, val)
     user.save()
     return jsonify(user.to_dict())
+

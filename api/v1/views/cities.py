@@ -57,9 +57,9 @@ def new_city(state_id):
     state = storage.get(State, state_id)
     city = request.get_json()
     if city is None:
-        return make_response(jsonify({"error": "Not a JSON"}), 404)
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
     if "name" not in city:
-        return make_response(jsonify({"error": "Missing name"}), 404)
+        return make_response(jsonify({"error": "Missing name"}), 400)
     if state is None:
         abort(404)
 
@@ -75,15 +75,14 @@ def new_city(state_id):
 def update_city(city_id):
     """ Update a City """
     city = storage.get(City, city_id)
-    new_data = request.get_json().items()
-    list_to_ignore = ["id", "created_at", "updated_at"]
+    list_to_ignore = ["id", "state_id", "created_at", "updated_at"]
 
     if city is None:
         abort(404)
-    if new_data is None:
-        return make_response(jsonify({"error": "Not a JSON"}), 404)
+    if request.get_json() is None:
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
 
-    for key, val in new_data:
+    for key, val in request.get_json().items():
         if key not in list_to_ignore:
             setattr(city, key, val)
     city.save()
