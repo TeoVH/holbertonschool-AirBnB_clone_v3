@@ -45,9 +45,9 @@ def new_state():
     """ Create a new State """
     state = request.get_json()
     if state is None:
-        return make_response(jsonify({"error": "Not a JSON"}), 404)
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
     if "name" not in state:
-        return make_response(jsonify({"error": "Missing name"}), 404)
+        return make_response(jsonify({"error": "Missing name"}), 400)
 
     new_state = State(**request.get_json())
     new_state.save()
