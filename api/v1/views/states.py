@@ -59,15 +59,14 @@ def new_state():
 def update_state(state_id):
     """ Update a state """
     state = storage.get(State, state_id)
-    new_data = request.get_json().items()
     list_to_ignore = ["id", "created_at", "updated_at"]
 
     if state is None:
         abort(404)
-    if new_data is None:
+    if request.get_json() is None:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
 
-    for key, val in new_data:
+    for key, val in request.get_json().items():
         if key not in list_to_ignore:
             setattr(state, key, val)
     state.save()
