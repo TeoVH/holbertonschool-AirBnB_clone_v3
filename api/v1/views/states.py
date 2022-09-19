@@ -65,7 +65,7 @@ def update_state(state_id):
     if state is None:
         abort(404)
     if new_data is None:
-        return make_response(jsonify({"error": "Not a JSON"}), 404)
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
 
     for key, val in new_data:
         if key not in list_to_ignore:
